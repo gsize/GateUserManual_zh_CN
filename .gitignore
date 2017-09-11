@@ -1,0 +1,12 @@
+_site/
+*.swp
+*.log
+*.bbl
+*.blg
+*.toc
+*.aux
+*.pdf
+*.out
+
+
+image/
