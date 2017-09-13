@@ -3,6 +3,29 @@
 \chapter{安装}
 
 
+Gate是一个开源的项目，其源代码公布在github网站上（https://github.com/OpenGATE/Gate），
+可以通过Git版本控制软件下载完整的程序代码库，
+
+\begin{lstlisting}
+git clone https://github.com/OpenGATE/Gate.git
+\end{lstlisting}
+
+
+也可以下载最新的发布版，然后解压、编译。目前，最新的版本是 V-8.0。
+
+每个人都可以通过这个网站克隆代码库，然后添加、修改代码或者修复bugs，为项目做贡献。
+
+Gate软件运行系统推荐用Linux系统，如Centos、Ubuntu、Archlinux、Debian等Linux发行版。
+
+在安装Gate之前，除了必备的编译环境（gcc、make、OpenGL等）外，这几个软件包必需事先装好，分别是：
+
+\begin{itemize}
+	\item CMake 用于配置编译环境，生成make所需要的Makefile。这个工具在网站https://cmake.org/下载对应系统的最新二进制版本，解压即可使用
+	\item Geant4 Gate基于Geat4基础上开发，通过网址http://geant4.cern.ch/support/download.shtml下载Geant4的相关代码和核数据库。
+	\item ROOT  Gate模拟的数据输出可提供多种格式，如ASSIC、Binary、ROOT、Interfile、Sinogram、LMF等。
+			主要推荐ROOT格式，配合ROOT数据分析软件，实现数据分析和图像呈现。
+	可在root.cern.ch网站上下载安装。
+\end{itemize}
 
 
 
