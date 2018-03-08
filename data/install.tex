@@ -23,9 +23,135 @@ Gate软件运行系统推荐用Linux系统，如Centos、Ubuntu、Archlinux、De
 	\item CMake 用于配置编译环境，生成make所需要的Makefile。这个工具在网站https://cmake.org/下载对应系统的最新二进制版本，解压即可使用
 	\item Geant4 Gate基于Geat4基础上开发，通过网址http://geant4.cern.ch/support/download.shtml下载Geant4的相关代码和核数据库。
 	\item ROOT  Gate模拟的数据输出可提供多种格式，如ASSIC、Binary、ROOT、Interfile、Sinogram、LMF等。
-			主要推荐ROOT格式，配合ROOT数据分析软件，实现数据分析和图像呈现。
-	可在root.cern.ch网站上下载安装。
+			主要推荐ROOT格式，配合ROOT数据分析软件，实现数据分析和图像呈现。可在root.cern.ch网站上下载安装。
 \end{itemize}
 
+注意：目前，Gate的发布版本还未支持Geant4的多线程（MT mode），因此，安装Geant4时注意不要开启多线程模式。
+
+\subsection{cmake的安装}
+从cmake的官网上下载linux版本二进制安装包，如图\ref{fig:cmake-site}
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=0.7\linewidth]{image/cmake-site}
+	\caption[]{cmake官网下载示意图}
+	\label{fig:cmake-site}
+\end{figure}
+在PATH系统环境变量中加入cmake的执行命令路径。假设cmake安装的目录为~/opt/cmake,在bash命令行终端中输入：
+
+export PATH=~/opt/cmake/bin:\$PATH  %配置环境变量PATH
+
+如果是csh终端，则用
+
+setenv PATH=~/opt/cmake/bin:\$PATH
 
 
+\subsection{ROOT的安装}
+ROOT的代码可以从ROOT的官网（root.cern.ch）下载，亦可通过git在https://github.com/root-project/root/网上克隆对应的版本进行安装。
+比如下载root\_v6.12.06.source.tar.gz代码到~/opt/目录下，相应的命令行操作如下：
+
+cd ~/opt
+
+tar -zxvf root\_v6.12.06.source.tar.gz  %解压源代码
+
+mkdir root-build
+
+cd root-install
+
+ccmake ..//root-6.12.06  %ccmake配置root的编译环境
+
+make  %编译代码
+
+make install   %安装ROOT软件到指定的安装目录下
+
+cmake配置root源代码编译环境环境界面如图\ref{fig:root-install-configure},其中CMAKE\_INSTALL\_PREFIX选项指定安装路径。
+本例子安装到~/opt/root\_6.12.06\_install
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=0.7\linewidth]{image/root-install-configure}
+	\caption{CMake配置ROOT的源代码编译环境}
+	\label{fig:root-install-configure}
+\end{figure}
+
+
+
+\subsection{Geant4的安装}
+Geant4的代码和所需要的数据库可以从Geant4的官网（geant4.cern.ch）下载，如图\ref{fig:geant4-download}。Geant4一般每半年更新一次，目前最新版本为geant4-10.4.1。
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=0.7\linewidth]{image/geant4-download}
+	\caption{geant4官网的下载网页界面}
+	\label{fig:geant4-download}
+\end{figure}
+
+
+本例子假设如下载geant4.10.04.p01.tar.gz代码到~/opt/目录下，相应的命令行操作如下：
+
+cd ~/opt
+
+tar -zxvf geant4.10.04.p01.tar.gz  %解压源代码
+
+mkdir geant4-build
+
+cd geant4-build
+
+ccmake ../geant4.10.04.p01  %ccmake配置root的编译环境
+
+make  %编译代码
+
+make install   %安装ROOT软件到指定的安装目录下
+
+cmake配置geant4源代码编译环境环境界面如图\ref{fig:geant4-install-configure},其中CMAKE\_INSTALL\_PREFIX选项指定安装路径。
+本例子安装到~/opt/geant4.10.4.p1\_install。geant4支持Qt可视化，可选上GEANT4\_USE\_QT，具体参考图\ref{fig:geant4-install-configure}配置
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=0.7\linewidth]{image/geant4-install-configure}
+	\caption{CMake配置Geant4的源代码编译环境}
+	\label{fig:geant4-install-configure}
+\end{figure}
+
+如果系统安装的Qt是自己安装的，需要修改源代码下的CMakeLists.txt文件，其中加入Qt的安装路径，如图\ref{fig:addqtingeant4}
+\begin{figure}[h]
+	\centering
+	\includegraphics[width=0.7\linewidth]{image/add_qt_in_geant4}
+	\caption{Geant4手动增加Qt的编译环境}
+	\label{fig:addqtingeant4}
+\end{figure}
+
+
+\subsection{Gate的安装}
+Gate的代码可以通过Gate官网（http://www.opengatecollaboration.org）下载，也能在github（https://github.com/OpenGATE/Gate）网站上下载.
+目前最新版本Gate\_v8.0。
+
+安装完Geant4和ROOT这两个软件后，需要配置一下各自的运行环境，即设置系统的环境变量。
+对于Geant4，需要运行一下source ~/opt/geant4/geant4.10.4.p1\_install/bin/geant4.sh,如果是csh，则是geant4.csh。
+而ROOT的运行环境也有一个脚本实现配置，source ~/opt/root\_6.12.06\_install/bin/thisroot.sh。
+
+cd ~/opt
+
+tar -zxvf gate\_v8.0.tar.gz  %解压源代码
+
+mkdir gate-build
+
+cd gate-build
+
+ccmake ../gate\_v8.0  %ccmake配置Gate的编译环境
+
+make  %编译代码
+
+make install   %安装Gate软件到指定的安装目录下
+
+至此，Gate程序安装完毕。
+
+可以在命令行中运行:
+./Gate --qt
+
+如果出现如图\ref{fig:gate-qt-gui}的界面，表明Gate运行正常。
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=0.7\linewidth]{image/Gate-qt-gui}
+	\caption{Gate调用Qt界面}
+	\label{fig:gate-qt-gui}
+\end{figure}
