@@ -5,8 +5,10 @@
 Gate一个用于核影像物理的蒙卡模拟程序，包括X射线断层扫描、正电子湮灭断层扫描、射线治疗等核相关模拟。
 
 这个程序基于欧洲核子中心开发的Geant4程序库开发而来应用程序，使用C++编程语言。
-Gate使用一个mac脚本作为输入文件，这个脚本定义了蒙卡相关的几个主要部分，分别为：
+Gate的输入文件基于Geant4的交互命令扩展而来，不需要用到C++程序语言实现Gate的模拟功能，
+因此，安装后Gate程序后，直接使用Gate的特有命令语句，即可构建模型，输出数据。
 
+Gate使用一个.mac结尾的脚本作为输入文件，这个脚本定义了蒙卡模拟相关的几个主要部分，分别为：
 \begin{itemize}
 	\item scanner  探测器部件，定义探测器的几何形状、位置、材料，运动状态；
 	\item phantom  模体，定义模体的几何形状、位置、材料，运动状态；
@@ -17,4 +19,36 @@ Gate使用一个mac脚本作为输入文件，这个脚本定义了蒙卡相关�
 	\item 模拟运行时间或粒子数目；
 	\item 开始运行指令（/gate/application/startDAQ）。
 \end{itemize}
+
+\section{成像模拟的基本框架}
+成像模拟的基本框架主要包括如下步骤：
+\begin{itemize}
+	\item 定义扫描头几何结构；
+	\item 定义模体几何结构；
+	\item 定义物理过程；
+	\item 初始化模拟（/gate/run/initialize）
+	\item 设置探测器工作模型
+	\item 设置放射源
+	\item 指定数据输出格式
+	\item 开始采集
+\end{itemize}
+其中，步骤一到四为模拟的初始化，必须放在/gate/run/initialize语句之前，初始化后，几何结构不可更改。
+
+\section{放疗及剂量模拟的基本框架}
+放疗及剂量模拟的基本框架主要包括如下步骤：
+\begin{itemize}
+	\item 定义粒子速流几何；
+	\item 定义模体几何；
+	\item 指定输出数据形式；
+	\item 设置物理过程；
+	\item 初始化模拟（/gate/run/initialize）；
+	\item 定义放射源；
+	\item 开始模拟。
+\end{itemize}
+
+举个栗子：
+
+\begin{lstlisting}
+is a code!
+\end{lstlisting}
 
